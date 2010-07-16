@@ -76,7 +76,7 @@ describe Albums do
     end
 
     def do_request
-      dispatch_to(Albums, :create, :album => {:itunes_id => 1}) do |controller|
+      dispatch_to(Albums, :create, :album => {:collection_id => 1}) do |controller|
         controller.stub!(:render)
       end
     end
@@ -93,7 +93,8 @@ describe Albums do
 
       it "should create a new album from the iTunes JSON" do
         album = mock(:album)
-        Album.should_receive(:from_json).and_return(album)
+        Album.should_receive(:new).and_return(album)
+        album.should_receive(:populate_from_json)
         album.should_receive(:save).and_return(true)
 
         do_request
@@ -101,7 +102,8 @@ describe Albums do
 
       it "should redirect to the album page" do
         album = mock(:album)
-        Album.stub!(:from_json).and_return(album)
+        Album.stub!(:new).and_return(album)
+        album.stub!(:populate_from_json)
         album.stub!(:save).and_return(true)
         album.stub!(:id).and_return(123)
 
@@ -127,6 +129,7 @@ describe Albums do
       it "should update the album" do
         album = mock(:album)
         Album.should_receive(:first).and_return(album)
+        album.should_receive(:populate_from_json)        
         album.should_receive(:save).and_return(true)
 
         do_request
@@ -135,6 +138,7 @@ describe Albums do
       it "should redirect to the album page" do
         album = mock(:album)
         Album.stub!(:first).and_return(album)
+        album.stub!(:populate_from_json)        
         album.stub!(:save).and_return(true)
         album.stub!(:id).and_return(456)
 
@@ -145,7 +149,7 @@ describe Albums do
 
   describe "PUT update" do
     def do_request
-      dispatch_to(Albums, :update, :album => {:itunes_id => 1}) do |controller|
+      dispatch_to(Albums, :update, :album => {:collection_id => 1}) do |controller|
         controller.stub!(:render)
       end
     end
@@ -155,9 +159,9 @@ describe Albums do
         stub_request(:get, "#{ItunesAPI::API_URI}?id=1").to_return(:body => fixture_file("album.json"))
 
         @album = mock(:album)
-        @album.stub!(:itunes_id).and_return(1)
+        @album.stub!(:collection_id).and_return(1)
         @album.stub!(:id).and_return(123)
-        @album.stub!(:populate_with_json)
+        @album.stub!(:populate_from_json)
         @album.stub!(:save).and_return(true)
         Album.stub!(:get).and_return(@album)
       end
@@ -168,7 +172,7 @@ describe Albums do
       end
 
       it "should update the album from the iTunes JSON" do
-        @album.should_receive(:populate_with_json)
+        @album.should_receive(:populate_from_json)
         @album.should_receive(:save).and_return(true)
         do_request
       end
@@ -183,7 +187,7 @@ describe Albums do
         stub_request(:get, "#{ItunesAPI::API_URI}?id=1").to_return(:body => fixture_file("nothing.json"))
 
         @album = mock(:album)
-        @album.stub!(:itunes_id).and_return(1)
+        @album.stub!(:collection_id).and_return(1)
         @album.stub!(:id).and_return(123)
         Album.stub!(:get).and_return(@album)
       end
@@ -194,7 +198,7 @@ describe Albums do
       end
 
       it "should not update the album from the iTunes JSON" do
-        @album.should_not_receive(:populate_with_json)
+        @album.should_not_receive(:populate_from_json)
         @album.should_not_receive(:save)
         do_request
       end
