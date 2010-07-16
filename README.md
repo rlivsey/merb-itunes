@@ -38,8 +38,7 @@ etc will try and load a different one resulting in:
     
 ## Running specs
 
-The specs have a number of other dependencies so need installing before 
-they will run:
+The specs use webmock, so you'll need to install that before running the specs:
 
     gem install webmock
     
