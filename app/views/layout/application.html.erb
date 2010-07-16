@@ -5,6 +5,15 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   </head>
   <body>
+    <% message.each do |type, message| %>
+      <p class="<%= type %>_message" ><%= message %></p>
+    <% end %>
     <%= catch_content :for_layout %>
+    
+    <hr />
+    <p>
+      <a href="/">Home</a>
+      <a href="<%= url(:new_album) %>">Add new album</a>
+    </p>
   </body>
 </html>

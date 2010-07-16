@@ -1,0 +1,14 @@
+<h1><%= @album.collection_id %> (<%= @album.artist_name %> - <%= @album.collection_name %>)</h1>
+
+<ul>
+  <li>Price: <%= @album.collection_price %></li>
+  <li>Currency: <%= @album.currency %></li>
+  <li>Country: <%= @album.country %></li>
+  <li>Last updated: <%= @album.updated_at.formatted(:long) %></li>
+</ul>
+
+<%= form_for(@album, :action => url(:album, @album)) do %>
+  <p>
+    <input type="submit" value="Update Price" />
+  </p>
+<% end =%>

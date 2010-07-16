@@ -1,0 +1,9 @@
+<h1>Albums</h1>
+  
+<ul>
+  <% @albums.each do |album| %>
+    <li>
+      <a href="<%= url(:album, album) %>"><%= album.collection_id%> (<%= album.artist_name %> - <%= album.collection_name %>)</a>
+    </li>
+  <% end %>
+</ul>

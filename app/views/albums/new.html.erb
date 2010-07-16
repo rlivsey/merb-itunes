@@ -1,0 +1,13 @@
+<%= form_for(@album, :action => resource(:albums)) do %>
+  
+  <%= error_messages_for(:album) %>
+  
+  <p>
+    <%= text_field :collection_id, :label => "Apple Product ID" %>
+  </p>
+  
+  <p>
+    <input type="submit" value="Search &amp; Save" />
+  </p>
+  
+<% end =%>
