@@ -95,11 +95,17 @@ describe Albums do
         album = mock(:album)
         Album.should_receive(:from_json).and_return(album)
         album.should_receive(:save).and_return(true)
+
         do_request
       end
 
       it "should redirect to the album page" do
-        do_request.should redirect_to(url(:album, 1))
+        album = mock(:album)
+        Album.stub!(:from_json).and_return(album)
+        album.stub!(:save).and_return(true)
+        album.stub!(:id).and_return(123)
+
+        do_request.should redirect_to(url(:album, 123))
       end
     end
 
@@ -120,42 +126,83 @@ describe Albums do
 
       it "should update the album" do
         album = mock(:album)
-        Album.should_receive(:find).and_return(album)
+        Album.should_receive(:first).and_return(album)
         album.should_receive(:save).and_return(true)
+
         do_request
       end
 
       it "should redirect to the album page" do
-        do_request.should redirect_to(url(:album, 1))
+        album = mock(:album)
+        Album.stub!(:first).and_return(album)
+        album.stub!(:save).and_return(true)
+        album.stub!(:id).and_return(456)
+
+        do_request.should redirect_to(url(:album, 456))
       end
     end
   end
 
   describe "PUT update" do
-    before(:each) do
-      stub_request(:get, "#{ItunesAPI::API_URI}?id=1").to_return(:body => fixture_file("album.json"))
-    end
-
     def do_request
       dispatch_to(Albums, :update, :album => {:itunes_id => 1}) do |controller|
         controller.stub!(:render)
       end
     end
 
-    it "should call the iTunes API" do
-      do_request
-      WebMock.should have_requested(:get, "#{ItunesAPI::API_URI}?id=1")
+    describe "with a valid iTunes ID" do
+      before(:each) do
+        stub_request(:get, "#{ItunesAPI::API_URI}?id=1").to_return(:body => fixture_file("album.json"))
+
+        @album = mock(:album)
+        @album.stub!(:itunes_id).and_return(1)
+        @album.stub!(:id).and_return(123)
+        @album.stub!(:populate_with_json)
+        @album.stub!(:save).and_return(true)
+        Album.stub!(:get).and_return(@album)
+      end
+
+      it "should call the iTunes API" do
+        do_request
+        WebMock.should have_requested(:get, "#{ItunesAPI::API_URI}?id=1")
+      end
+
+      it "should update the album from the iTunes JSON" do
+        @album.should_receive(:populate_with_json)
+        @album.should_receive(:save).and_return(true)
+        do_request
+      end
+
+      it "should redirect to the album page" do
+        do_request.should redirect_to(url(:album, 123))
+      end
     end
 
-    it "should update the album" do
-      album = mock(:album)
-      Album.should_receive(:find).and_return(album)
-      album.should_receive(:save).and_return(true)
-      do_request
+    describe "with a no longer valid iTunes ID" do
+      before(:each) do
+        stub_request(:get, "#{ItunesAPI::API_URI}?id=1").to_return(:body => fixture_file("nothing.json"))
+
+        @album = mock(:album)
+        @album.stub!(:itunes_id).and_return(1)
+        @album.stub!(:id).and_return(123)
+        Album.stub!(:get).and_return(@album)
+      end
+
+      it "should call the iTunes API" do
+        do_request
+        WebMock.should have_requested(:get, "#{ItunesAPI::API_URI}?id=1")
+      end
+
+      it "should not update the album from the iTunes JSON" do
+        @album.should_not_receive(:populate_with_json)
+        @album.should_not_receive(:save)
+        do_request
+      end
+
+      it "should not redirect to the album page" do
+        do_request.should_not redirect_to(url(:album, 123))
+      end
     end
 
-    it "should redirect to the album page" do
-      do_request.should redirect_to(url(:album, 1))
-    end
   end
 end
