@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 ITUNES_API_URI = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/wa/wsLookup"
 
 describe ItunesAPI do
-  describe "#find_album" do
+  describe ".find_album" do
     it "should call the iTunes API with the correct ID" do
       stub_request(:get, "#{ITUNES_API_URI}?id=123456")
       ItunesAPI.find_album(123456)
