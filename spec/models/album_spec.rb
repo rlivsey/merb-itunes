@@ -6,9 +6,27 @@ describe Album do
       @json = JSON.parse(fixture_file("album.json").read)["results"][0]
     end
     
+    it "should instantiate a new album and call #populate_from_json on it" do
+      album = mock(:album)
+      Album.stub!(:new).and_return(album)
+      album.should_receive(:populate_from_json).with(@json)
+      Album.from_json(@json)
+    end
+    
+    it "should return an album" do
+      Album.from_json(@json).should be_a(Album)
+    end
+  end
+  
+  describe "#populate_from_json" do
+    before(:each) do
+      @json = JSON.parse(fixture_file("album.json").read)["results"][0]
+      @album = Album.new
+    end
+    
     it "should initialize a new album populated with the JSON data passed" do
-      album = Album.from_json(@json)
-      album.should be_a(Album)
+      @album.populate_from_json(@json)
+      
       {
         :collection_explicitness   => "notExplicit",
         :collection_name           => "X & Y",
@@ -32,14 +50,14 @@ describe Album do
         :collection_id             => 66314629,
         :currency                  => "USD"
        }.each do |key, value|
-         album.send(key).should == value
+         @album.send(key).should == value
        end
     end
     
     it "should not die if the JSON contains an attribute it doesn't know about" do
       @json["somethingUnknown"] = "something"
       lambda {
-        Album.from_json(@json)
+        @album.populate_from_json(@json)
       }.should_not raise_error
     end
   end

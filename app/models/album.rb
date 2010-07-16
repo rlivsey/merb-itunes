@@ -28,13 +28,16 @@ class Album
 
   timestamps :at
 
-  # convert keys to snake_case and assign if the property exists
   def self.from_json(json)
-    album = new
+    new.populate_from_json(json)
+  end
+
+  # convert keys to snake_case and assign if the property exists  
+  def populate_from_json(json)
     json.each do |key, value|
       key = key.to_s.snake_case
-      album.send(:"#{key}=", value) if album.respond_to?(:"#{key}=")
-    end
-    album
+      self.send(:"#{key}=", value) if self.respond_to?(:"#{key}=")
+    end  
+    self
   end
 end
