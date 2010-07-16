@@ -10,4 +10,6 @@
 # http://www.apple.com/itunes/affiliates/resources/documentation/itunes-store-web-service-search-api.html
 
 module ItunesAPI
+  def self.find_album(id)
+  end
 end

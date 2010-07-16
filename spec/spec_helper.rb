@@ -8,6 +8,7 @@ end
 
 require "merb-core"
 require "spec" # Satisfies Autotest and anyone else not using the Rake tasks
+require 'webmock/rspec'
 
 # this loads all plugins required in your init file so don't add them
 # here again, Merb will do it for you
@@ -17,9 +18,15 @@ Spec::Runner.configure do |config|
   config.include(Merb::Test::ViewHelper)
   config.include(Merb::Test::RouteHelper)
   config.include(Merb::Test::ControllerHelper)
-  
+  config.include(WebMock)
+
   config.before(:all) do
     DataMapper.auto_migrate! if Merb.orm == :datamapper
   end
-  
+
+end
+
+# helper to find a fixture
+def fixture_file(name)
+  File.new(File.expand_path(File.dirname(__FILE__) + "/fixtures/#{name}"))
 end
