@@ -1,0 +1,10 @@
+
+
+
+{
+ "resultCount":2,
+ "results": [
+{"wrapperType":"collection", "collectionType":"Album", "artistId":471744, "collectionId":66314629, "amgArtistId":435023, "amgVideoArtistId":null, "artistName":"Coldplay", "collectionName":"X & Y", "collectionCensoredName":"X & Y", "artistViewUrl":"http://itunes.apple.com/us/artist/coldplay/id471744?uo=4", "collectionViewUrl":"http://itunes.apple.com/us/album/x-y/id66314629?uo=4", "artworkUrl60":"http://a1.phobos.apple.com/us/r1000/000/Features/7b/09/42/dj.damrffnz.60x60-50.jpg", "artworkUrl100":"http://a1.phobos.apple.com/us/r1000/000/Features/7b/09/42/dj.damrffnz.100x100-75.jpg", "collectionPrice":7.99, "collectionExplicitness":"notExplicit", "trackCount":13, "copyright":"2005 The copyright in this sound recording is owned by EMI Records Ltd", "country":"USA", "currency":"USD", "releaseDate":"2006-08-14T07:00:00Z", "primaryGenreName":"Alternative"}, 
+{"wrapperType":"collection", "collectionType":"Album", "artistId":471744, "collectionId":66092910, "amgArtistId":435023, "amgVideoArtistId":null, "artistName":"Coldplay", "collectionName":"X & Y", "collectionCensoredName":"X & Y", "artistViewUrl":"http://itunes.apple.com/us/artist/coldplay/id471744?uo=4", "collectionViewUrl":"http://itunes.apple.com/us/album/x-y/id66092910?uo=4", "artworkUrl60":"http://a1.phobos.apple.com/us/r1000/017/Features/40/f0/b6/dj.vjdvmixl.60x60-50.jpg", "artworkUrl100":"http://a1.phobos.apple.com/us/r1000/017/Features/40/f0/b6/dj.vjdvmixl.100x100-75.jpg", "collectionPrice":7.99, "collectionExplicitness":"notExplicit", "trackCount":13, "copyright":"2005 The copyright in this sound recording is owned by EMI Records Ltd", "country":"USA", "currency":"USD", "releaseDate":"2006-08-14T07:00:00Z", "primaryGenreName":"Alternative"}]
+}
+
