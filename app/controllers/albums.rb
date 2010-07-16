@@ -44,7 +44,7 @@ class Albums < Application
     end
 
     message[:error] = "No price found for the album"
-    render
+    render :show
   end
 
   private
