@@ -16,6 +16,10 @@ to worry about those).
 
 Create config/database.yml (copy config/database.yml.example for a base version)
 
+Once the database is configured, you'll need to build the tables:
+
+    rake db:automigrate
+
 Install mongrel/thin/other to use as a webserver
 
     gem install mongrel
