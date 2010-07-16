@@ -60,5 +60,10 @@ describe Album do
         @album.populate_from_json(@json)
       }.should_not raise_error
     end
+    
+    it "should be valid once populated" do
+      @album.populate_from_json(@json)
+      @album.should be_valid
+    end
   end
 end

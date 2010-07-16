@@ -3,27 +3,26 @@ class Album
   include DataMapper::Timestamps
 
   property :id,                       Serial
-  property :itunes_id,                Integer, :required => true
+  property :collection_id,            Integer, :required => true  
   property :collection_explicitness,  String
-  property :collection_name,          String
+  property :collection_name,          String, :length => 255
   property :country,                  String
-  property :artwork_url100,           String
+  property :artwork_url100,           String, :length => 255
   property :artist_id,                Integer
   property :wrapper_type,             String
-  property :primary_genre_name,       String
-  property :artwork_url60,            String
-  property :collection_view_url,      String
+  property :primary_genre_name,       String, :length => 255
+  property :artwork_url60,            String, :length => 255
+  property :collection_view_url,      String, :length => 255
   property :collection_price,         Float     # note, should really store money as Integer
   property :amg_video_artist_id,      Integer
-  property :collection_type,          Integer
+  property :collection_type,          String
   property :release_date,             DateTime
   property :track_count,              Integer
-  property :copyright,                String
-  property :artist_view_url,          String
-  property :collection_censored_name, String
-  property :artist_name,              String
+  property :copyright,                String, :length => 255
+  property :artist_view_url,          String, :length => 255
+  property :collection_censored_name, String, :length => 255
+  property :artist_name,              String, :length => 255
   property :amg_artist_id,            Integer
-  property :collection_id,            Integer
   property :currency,                 String
 
   timestamps :at
