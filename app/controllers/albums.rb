@@ -1,5 +1,3 @@
-require 'pp'
-
 class Albums < Application
 
   before :get_album, :only => [:show, :update]
