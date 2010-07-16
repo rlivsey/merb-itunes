@@ -1,0 +1,18 @@
+---
+development: &defaults
+  adapter:  mysql
+  database: itunes_development
+  host: localhost
+  username: mysql-user
+  password: mysql-password
+ 
+test:
+  <<:       *defaults
+  database: itunes_test
+ 
+production:
+  <<:       *defaults
+  database: itunes_production
+ 
+rake:
+  <<: *defaults
