@@ -27,8 +27,21 @@ class Album
 
   timestamps :at
 
+  COUNTRY_CURRENCIES = {
+    :usd => "$",
+    :gbp => "£"
+  }
+
   def self.from_json(json)
     new.populate_from_json(json)
+  end
+
+  def pretty_price
+    "#{currency_symbol}#{collection_price}"
+  end
+
+  def currency_symbol
+    COUNTRY_CURRENCIES[currency.downcase.to_sym]
   end
 
   # convert keys to snake_case and assign if the property exists  

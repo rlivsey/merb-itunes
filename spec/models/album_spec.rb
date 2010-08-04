@@ -18,6 +18,17 @@ describe Album do
     end
   end
   
+  describe "#pretty_price" do
+    it "should provide a pretty price that has a currency symbobol for dollars and pounds" do
+      album = Album.new
+      album.collection_price = 10.66
+      album.currency = 'GBP'
+      album.pretty_price.should == '£10.66'
+      album.currency = 'USD'
+      album.pretty_price.should == '$10.66'
+    end
+  end
+  
   describe "#populate_from_json" do
     before(:each) do
       @json = JSON.parse(fixture_file("album.json").read)["results"][0]
